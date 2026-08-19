@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.42.1" theme-name="Stellar" theme-version="1.42.1">
   
-  
+  <meta name="robots" content="noindex,follow">
   <meta name="generator" content="Hexo 7.3.0">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -17,27 +17,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>基于Hexo+Github搭建的个人博客 - Fritz's Blog</title>
+  <title>标签：插件 - Fritz's Blog</title>
 
-  <meta name="description" content="本文记录了从安装 Hexo 到部署到 GitHub 的完整过程，包含Node.js、Git安装和Hexo配置。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="基于Hexo+Github搭建的个人博客">
-<meta property="og:url" content="https://fritz-lang.github.io/2026/08/18/first-blog/">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Fritz's Blog">
+<meta property="og:url" content="https://fritz-lang.github.io/tags/%E6%8F%92%E4%BB%B6/">
 <meta property="og:site_name" content="Fritz's Blog">
-<meta property="og:description" content="本文记录了从安装 Hexo 到部署到 GitHub 的完整过程，包含Node.js、Git安装和Hexo配置。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://repository-images.githubusercontent.com/5923215/ae16280b-260d-4167-8fa4-c533dad06177">
-<meta property="article:published_time" content="2026-08-18T03:30:00.000Z">
-<meta property="article:modified_time" content="2026-08-19T09:28:47.134Z">
+<meta property="og:image" content="https://fritz-lang.github.io/images/personal_pic.jpeg">
 <meta property="article:author" content="Fritz Lang">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="Github">
-<meta property="article:tag" content="个人博客">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://repository-images.githubusercontent.com/5923215/ae16280b-260d-4167-8fa4-c533dad06177"><meta name="twitter:title" content="基于Hexo+Github搭建的个人博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fritz-lang.github.io/images/personal_pic.jpeg">
   
   
-  <meta name="keywords" content="Hexo,Github,个人博客">
+  
 
   <!-- feed -->
   
@@ -52,7 +45,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Fritz Lang","sameAs":[],"image":"https://fritz-lang.github.io/images/personal_pic.jpeg"},"dateCreated":"2026-08-18T11:30:00+08:00","dateModified":"2026-08-19T17:28:47+08:00","datePublished":"2026-08-18T11:30:00+08:00","description":"📚 目录\n第一章：为什么想搭这个博客？\n第二章：安装\n环境搭建\nNode.js\nGit\n\n\nGithub仓库\n安装Hexo\n\n\n第三章：使用方法\n\n\n第一章：为什么想搭这个博客？\n撰写本文前，我一直使用备忘录或者网页标签的形式记录一些知识，过于繁琐而且不能很好的将这些知识整合，在了解了博客这一记录形式后，决定搭建一个个人博客，用来记录技术工具、研究项目以及生活琐事。尽管网上有很多现成的平台...","headline":"基于Hexo+Github搭建的个人博客","mainEntityOfPage":{"@type":"WebPage","@id":"https://fritz-lang.github.io/2026/08/18/first-blog/"},"publisher":{"@type":"Organization","name":"Fritz Lang","sameAs":[],"image":"https://fritz-lang.github.io/images/personal_pic.jpeg","logo":{"@type":"ImageObject","url":"https://fritz-lang.github.io/images/personal_pic.jpeg"}},"url":"https://fritz-lang.github.io/2026/08/18/first-blog/","keywords":"Hexo, Github, 个人博客","thumbnailUrl":"https://repository-images.githubusercontent.com/5923215/ae16280b-260d-4167-8fa4-c533dad06177","image":["https://repository-images.githubusercontent.com/5923215/ae16280b-260d-4167-8fa4-c533dad06177"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://fritz-lang.github.io","author":{"@type":"Person","name":"Fritz Lang","sameAs":[],"image":"https://fritz-lang.github.io/images/personal_pic.jpeg"},"name":"Fritz's Blog","description":"","url":"https://fritz-lang.github.io"}</script>
   
 
   <!-- icons.yml 驱动的 CSS 装饰图标 -->
@@ -66,7 +59,7 @@
 }</style>
   
 </head>
-<body><div id="l_cover"></div><div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left leftbar-card"><div class="sidebg"></div><div class="leftbar-container">
+<body><div id="l_cover"></div><div class="l_body index" id="start" layout="undefined" type="undefined" ><aside class="l_left leftbar-card"><div class="sidebg"></div><div class="leftbar-container">
 
 
 
@@ -81,209 +74,32 @@
 
 <nav class="menu dis-select"></nav>
 </div>
-
-
-<widget class="widget-wrapper slide-up recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/08/18/first-blog/"><span class="title">基于Hexo+Github搭建的个人博客</span></a></div></widget>
+<widget class="widget-wrapper slide-up recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/08/18/Tool/"><span class="title">各类工具、插件或者教程的网址</span></a><a class="item title" href="/2026/08/18/Hexo/"><span class="title">基于Hexo+Github搭建的个人博客</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
 
 
+<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg"></div><img no-lazy class="avatar" src="/images/personal_pic.jpeg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Fritz's Blog</div><div class="sub cap">记录技术、研究与生活</div></a></div></header>
+
+ 
 
 
 
 
-<div class="article-banner-wrap slide-up"><div class="article banner top">
-  <div class="content">
-    
-    <div class="top bread-nav footnote"><div class="top-row"><div class="left" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
-<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></div></div><div class="meta-row">
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-08-18T03:30:00.000Z">2026-08-18</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-08-19T09:28:47.134Z">2026-08-19</time></span></div>
-</div></div>
-    
-    <div class="bottom only-title">
-      
-      <div class="text-area">
-        <h1 class="text title"><span>基于Hexo+Github搭建的个人博客</span></h1>
-        
-      </div>
-    </div>
-    
-  </div>
-  </div></div>
-<article class="md-text content slide-up"><h2 id="📚-目录"><a href="#📚-目录" class="headerlink" title="📚 目录"></a>📚 目录</h2><ul>
-<li><a href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%83%B3%E6%90%AD%E8%BF%99%E4%B8%AA%E5%8D%9A%E5%AE%A2">第一章：为什么想搭这个博客？</a></li>
-<li><a href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AE%89%E8%A3%85">第二章：安装</a><ul>
-<li><a href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA">环境搭建</a><ul>
-<li><a href="#nodejs">Node.js</a></li>
-<li><a href="#git">Git</a></li>
-</ul>
-</li>
-<li><a href="#github%E4%BB%93%E5%BA%93">Github仓库</a></li>
-<li><a href="#%E5%AE%89%E8%A3%85hexo">安装Hexo</a></li>
-</ul>
-</li>
-<li><a href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">第三章：使用方法</a></li>
-</ul>
-<hr>
-<h1 id="第一章：为什么想搭这个博客？"><a href="#第一章：为什么想搭这个博客？" class="headerlink" title="第一章：为什么想搭这个博客？"></a>第一章：为什么想搭这个博客？</h1><blockquote>
-<p>撰写本文前，我一直使用备忘录或者网页标签的形式记录一些知识，过于繁琐而且不能很好的将这些知识整合，在了解了博客这一记录形式后，决定搭建一个个人博客，用来记录技术工具、研究项目以及生活琐事。尽管网上有很多现成的平台，但还是倾向于自己搭建一个，有更高的自由度，也能顺便学习一下前端工具链。</p>
-</blockquote>
-<p>这次选择了 <strong>Hexo</strong> + <strong>GitHub</strong> 的组合，原因很简单：<strong>免费、轻量、纯静态</strong>。</p>
-<h1 id="第二章：安装"><a href="#第二章：安装" class="headerlink" title="第二章：安装"></a>第二章：安装</h1><blockquote>
-<p>本项目是基于 <strong>Macos</strong> 搭建，从 <code>Node.js -&gt; Git -&gt; Github -&gt; Hexo</code> 逐步介绍。</p>
-</blockquote>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><blockquote>
-<p><code>Hexo</code> 基于 <code>Node.js</code>，搭建过程中还需要使用 <code>npm</code>（<code>Node.js</code> 已带）和 <code>git</code>，因此先搭建本地操作环境，安装 <code>Node.js</code> 和 <code>Git</code>。</p>
-</blockquote>
-<h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h3><blockquote>
-<p>简单的说 <code>Node.js</code> 就是运行在服务端的 <code>JavaScript</code>。</p>
-</blockquote>
-<p>推荐使用<code>nvm</code>来安装，因为可以在不同项目间切换 <code>Node.js</code> 版本。</p>
-<p>1.安装 <code>nvm</code>：在“终端”中运行以下命令：</p>
-<pre><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-</code></pre>
-<p>2.并执行下述代码使配置生效：</p>
-<pre><code>source ~/.zshrc
-</code></pre>
-<p>3.推荐安装 <code>Node.js</code>的稳定版本，即 <code>LTS</code> 版本。执行以下命令，<code>nvm</code> 会自动下载并安装最新的 <code>LTS</code> 版本：</p>
-<pre><code>nvm install --lts
-</code></pre>
-<p>4.安装完成后，执行以下命令切换到 <code>LTS</code> 版本：</p>
-<pre><code>nvm use --lts
-</code></pre>
-<p>5.安装完成后输入以下命令来检查是否安装成功：</p>
-<pre><code>node -v &amp;&amp; npm -v
-</code></pre>
-<p>如果看到类似 <code>v24.18.0</code> 和 <code>11.17.0</code> 的版本号，就说明 <code>Node.js</code> 已成功安装。</p>
-<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><blockquote>
-<p><code>Git</code>是目前世界上最先进的分布式版本控制系统。这里只介绍如何安装，<code>Git</code>的具体使用详见<a target="_blank" rel="noopener" href="https://liaoxuefeng.com/books/git/introduction/index.html">Git教程</a>。</p>
-</blockquote>
-<p>在Macos上下载<code>Git</code>，第一种方式较为简单，但需要下载一个巨大的<code>XCode</code>。而第二种方式是先安装包管理器<code>Homebrew</code>，然后通过<code>Homebrew</code>安装<code>Git</code>。这里更推荐第二种，下面我来介绍下：</p>
-<p><strong>第一步</strong>：安装 <code>Homebrew</code></p>
-<p>方法一：官方脚本安装</p>
-<pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
-</code></pre>
-<p>方法二：<code>Homebrew</code> 最新的<a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew/releases/">GitHub发布页</a>中下载.pkg文件</p>
-<p><strong>第二步</strong>：使用 <code>Homebrew</code> 安装 <code>Git</code></p>
-<p>1.在“终端”中执行以下命令：</p>
-<pre><code>brew install git
-</code></pre>
-<p>2.等待命令执行完毕，<code>Homebrew</code> 会自动下载并安装最新版本的 <code>Git</code>。</p>
-<p>3.安装完成后输入以下命令来检查是否安装成功：</p>
-<pre><code>git --version
-</code></pre>
-<p>如果能看到版本号（如 <code>git version 2.x.x</code> ），就说明 <code>Git</code> 已成功安装。</p>
-<p>4.安装好 <code>Git</code> 后，还需要最后一步设置，在命令行输入：</p>
-<pre><code>git config --global user.name &quot;Your Name&quot;
-git config --global user.email &quot;email@example.com&quot;
-</code></pre>
-<p>注意 <code>git config</code> 命令的 <code>--global</code> 参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置。<br>名字和邮箱地址推荐和 <code>GitHub</code> 设置相同。</p>
-<h2 id="Github仓库"><a href="#Github仓库" class="headerlink" title="Github仓库"></a>Github仓库</h2><blockquote>
-<p><code>GitHub</code> 是一个基于 <code>web</code> 的版本控制和代码管理服务平台，它主要用于计算机代码的存储、管理和跟踪变更。我们使用邮箱注册 <code>GitHub</code> 账户，选择免费账户（Free），并完成邮件验证。</p>
-</blockquote>
-<p>本地 <code>Git</code> 配置好，要连接到远程 <code>Github</code> 库中，分为两个问题：如何连接？远程库如何创建？</p>
-<p><strong>第一步</strong>：连接到远程库</p>
-<p>1.创建 <code>SSH</code> 密匙：</p>
-<pre><code>ssh-keygen -t rsa -C &quot;GitHub 邮箱&quot;
-</code></pre>
-<p>2.添加密匙：</p>
-<p>进入 <code>~:\Usrs\用户名\.ssh</code> 文件夹，由于默认隐藏，按下 <code>command + shift + .</code> 显示，双击打开公钥 <code>id_rsa.pub</code> 文件并复制里面的内容。</p>
-<p>登陆 <code>GitHub</code> ，进入 <code>Settings</code> 页面，选择左边栏的 <code>SSH and GPG keys</code>，点击 <code>New SSH key</code>。</p>
-<p><code>Title</code> 随便取个名字，粘贴复制的 <code>id_rsa.pub</code> 内容到 <code>Key</code> 中，点击 <code>Add SSH key</code> 完成添加。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic1.zhimg.com/v2-9125065afd24332d7cd84feb6a350730_1440w.jpg" alt="添加公钥"></p>
-<p>3.验证连接：</p>
-<p>在终端中输入 <code>ssh -T git@github.com</code> 出现 <code>“Are you sure……”</code>，输入 <code>yes</code> 回车确认。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pica.zhimg.com/v2-b4c7524a2451f4ab42f9c22ea3c7b6be_r.jpg" alt="验证连接"></p>
-<p>显示 <code>“Hi xxx! You&#39;ve successfully……”</code> 即连接成功。</p>
-<p><strong>第二步</strong>：创建 <code>Github</code> 仓库</p>
-<p>1.<code>GitHub</code> 主页右上角加号 -&gt; <code>New repository：</code>。</p>
-<p>2.<code>Repository name</code> 中输入 <code>用户名.github.io</code>。</p>
-<p>3.勾选 <code>“Initialize this repository with a README”</code>，此外，<code>Description</code> 可以选填。</p>
-<p>4.填好后点击 <code>Create repository</code> 创建。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://picx.zhimg.com/v2-67a8165154f4c5f4a6333e76e78ed815_1440w.jpg" alt="创建Github仓库"></p>
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><blockquote>
-<p><code>Hexo</code> 是一个快速、简洁且高效的博客框架，使用 <code>Markdown</code> 或其他渲染引擎解析文章，并在几秒内生成静态网页。</p>
-</blockquote>
-<p>新建一个文件夹用来存放 <code>Hexo</code> 的程序文件，如 <code>Blog</code> ，从终端使用 <code>cd + Blog文件夹的绝对路径</code> 进入这个文件夹。</p>
-<p>1.使用 <code>npm</code> 一键安装 <code>Hexo</code> 博客程序：</p>
-<pre><code>npm install -g hexo-cli
-</code></pre>
-<p>安装完成后如下图:</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic4.zhimg.com/v2-01e7fc8bb9280437deb437bf73a190a1_r.jpg" alt="安装完成"></p>
-<p>2.<code>Hexo</code> 初始化并安装所需组件：</p>
-<pre><code>hexo init      # 初始化
-npm install    # 安装组件
-</code></pre>
-<p>3.完成后依次输入下面命令，启动本地服务器进行预览：</p>
-<pre><code>hexo g   # 生成页面
-hexo s   # 启动预览
-</code></pre>
-<p>访问 <code>http://localhost:4000</code>，若出现 <code>Hexo</code> 默认页面，则本地博客安装成功。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic2.zhimg.com/v2-1c3baeecf1ef3bec5c8ef3f14639f68b_r.jpg" alt="Hexo默认界面"></p>
-<p>4.部署 <code>Hexo</code> 到 <code>GitHub</code> ，使其能够在网络上访问：</p>
-<p>安装 <code>hexo-deployer-git</code>：</p>
-<pre><code>npm install hexo-deployer-git --save
-</code></pre>
-<p>然后修改 <code>_config.yml</code> 文件末尾的 <code>Deployment</code> 部分，修改成如下：</p>
-<pre><code>deploy:
-  type: git
-  repository: git@github.com:用户名/用户名.github.io.git
-  branch: main
-</code></pre>
-<p>完成后运行 <code>hexo d</code> 将网站上传部署到 GitHub Pages。</p>
-<p>完成！这时访问我们的 <code>GitHub</code> 域名 <code>https://用户名.github.io</code> 就可以看到 <code>Hexo</code> 网站了。</p>
-<h1 id="第三章：使用方法"><a href="#第三章：使用方法" class="headerlink" title="第三章：使用方法"></a>第三章：使用方法</h1><p>使用vscode打开hexo所在目录，启动终端。</p>
-<p>1.创建博文：</p>
-<pre><code>hexo new &quot;My New Post&quot;
-</code></pre>
-<p>然后 <code>source</code> 文件夹中会出现一个 <code>My New Post.md</code> 文件，就可以使用 <code>Markdown</code> 编辑器在该文件中撰写文章了。</p>
-<p>也可以不使用命令自己创建 <code>.md</code> 文件，只需在文件开头手动加入如下格式 <code>Front-matter</code> 即可</p>
-<p>2.文章渲染并部署:</p>
-<pre><code>hexo g   # 生成页面
-hexo d   # 部署发布
-#或者合并
-hexo g -d
-</code></pre>
-<p>3.本地预览:</p>
-<pre><code>hexo s
-</code></pre>
-<p>4.清除缓存和已生成的静态文件:</p>
-<pre><code>hexo clean
-</code></pre>
-<p>5.帮助</p>
-<pre><code>hexo help
-</code></pre>
-<hr>
-</article>
 
-<div class="article-tags slide-up"><a class="tag" href="/tags/Hexo/"><svg class="icon" data-icon="default:hashtag" aria-hidden="true"></svg>Hexo</a><a class="tag" href="/tags/Github/"><svg class="icon" data-icon="default:hashtag" aria-hidden="true"></svg>Github</a><a class="tag" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"><svg class="icon" data-icon="default:hashtag" aria-hidden="true"></svg>个人博客</a></div>
+<div class="navbar top"><div class="navbar-blur"><div class="navbar-container"><nav class="post"><a href="/">近期发布</a><a href="/categories/">分类</a><a class="active" href="/tags/">标签：插件</a><a href="/archives/">归档</a></nav></div></div></div>
 
-<div class="article-footer slide-up">
-    <section id="license">
-      <div class="header"><span>许可协议</span></div>
-      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div>
-    </section>
-    
-
-</div>
-
-
-
-
+<div class="post-list post"><div class="post-card-wrap slide-up"><a class="post-card post photo" style="--cover-url:url('https:&#x2F;&#x2F;www.mksucai.com&#x2F;png&#x2F;qdxxvagd.html')" href="/2026/08/18/Tool/">
+<div class="cover" position="bottom" style="--cover-url:url('https:&#x2F;&#x2F;www.mksucai.com&#x2F;png&#x2F;qdxxvagd.html')"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https:&#x2F;&#x2F;www.mksucai.com&#x2F;png&#x2F;qdxxvagd.html"/><div class="cover-info" position="bottom" data-text-adaptive="split"><div class="text headline">各类工具、插件或者教程的网址</div><div class="text caption">本文记录了我在学的、使用的和很多有趣的工具、插件或者教程的网址。</div></div></div>
+</a></div></div>
 
 
 
 
 <footer class="page-footer slide-up footnote"><hr><div class="text"><p>本站由 <a href="/">Fritz Lang</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.42.1">Stellar 1.42.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
-<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right"><div class="widgets">
-
-
-
-<widget class="widget-wrapper slide-up toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%9A-%E7%9B%AE%E5%BD%95"><span class="toc-text">📚 目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%83%B3%E6%90%AD%E8%BF%99%E4%B8%AA%E5%8D%9A%E5%AE%A2%EF%BC%9F"><span class="toc-text">第一章：为什么想搭这个博客？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%AE%89%E8%A3%85"><span class="toc-text">第二章：安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-js"><span class="toc-text">Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git"><span class="toc-text">Git</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github%E4%BB%93%E5%BA%93"><span class="toc-text">Github仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Hexo"><span class="toc-text">安装Hexo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">第三章：使用方法</span></a></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M11.9426 1.25H12.0574C14.3658 1.24999 16.1748 1.24998 17.5863 1.43975C19.031 1.63399 20.1711 2.03933 21.0659 2.93414C21.9607 3.82895 22.366 4.96897 22.5603 6.41371C22.75 7.82519 22.75 9.63423 22.75 11.9426V12.0574C22.75 14.3658 22.75 16.1748 22.5603 17.5863C22.366 19.031 21.9607 20.1711 21.0659 21.0659C20.1711 21.9607 19.031 22.366 17.5863 22.5603C16.1748 22.75 14.3658 22.75 12.0574 22.75H11.9426C9.63423 22.75 7.82519 22.75 6.41371 22.5603C4.96897 22.366 3.82895 21.9607 2.93414 21.0659C2.03933 20.1711 1.63399 19.031 1.43975 17.5863C1.24998 16.1748 1.24999 14.3658 1.25 12.0574V11.9426C1.24999 9.63423 1.24998 7.82519 1.43975 6.41371C1.63399 4.96897 2.03933 3.82895 2.93414 2.93414C3.82895 2.03933 4.96897 1.63399 6.41371 1.43975C7.82519 1.24998 9.63423 1.24999 11.9426 1.25ZM6.61358 2.92637C5.33517 3.09825 4.56445 3.42514 3.9948 3.9948C3.42514 4.56445 3.09825 5.33517 2.92637 6.61358C2.75159 7.91356 2.75 9.62177 2.75 12C2.75 14.3782 2.75159 16.0864 2.92637 17.3864C3.09825 18.6648 3.42514 19.4355 3.9948 20.0052C4.56445 20.5749 5.33517 20.9018 6.61358 21.0736C7.91356 21.2484 9.62177 21.25 12 21.25C14.3782 21.25 16.0864 21.2484 17.3864 21.0736C18.6648 20.9018 19.4355 20.5749 20.0052 20.0052C20.5749 19.4355 20.9018 18.6648 21.0736 17.3864C21.2484 16.0864 21.25 14.3782 21.25 12C21.25 9.62177 21.2484 7.91356 21.0736 6.61358C20.9018 5.33517 20.5749 4.56445 20.0052 3.9948C19.4355 3.42514 18.6648 3.09825 17.3864 2.92637C16.0864 2.75159 14.3782 2.75 12 2.75C9.62177 2.75 7.91356 2.75159 6.61358 2.92637ZM12 9.56066L9.53033 12.0303C9.23744 12.3232 8.76256 12.3232 8.46967 12.0303C8.17678 11.7374 8.17678 11.2626 8.46967 10.9697L11.4697 7.96967C11.7626 7.67678 12.2374 7.67678 12.5303 7.96967L15.5303 10.9697C15.8232 11.2626 15.8232 11.7374 15.5303 12.0303C15.2374 12.3232 14.7626 12.3232 14.4697 12.0303L12 9.56066ZM12 13.5607L9.53033 16.0303C9.23744 16.3232 8.76256 16.3232 8.46967 16.0303C8.17678 15.7374 8.17678 15.2626 8.46967 14.9697L11.4697 11.9697C11.7626 11.6768 12.2374 11.6768 12.5303 11.9697L15.5303 14.9697C15.8232 15.2626 15.8232 15.7374 15.5303 16.0303C15.2374 16.3232 14.7626 16.3232 14.4697 16.0303L12 13.5607Z" clip-rule="evenodd"/></svg><span>回到顶部</span></a></div></widget>
-</div></aside><div class='float-panel'>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right"></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
@@ -296,7 +112,7 @@ hexo g -d
 
 <script type="text/javascript">
   window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
-  window.canonical["param"] = {"permalink":"https://fritz-lang.github.io/2026/08/18/first-blog/","checklink":"/js/plugins/video.js"};
+  window.canonical["param"] = {"permalink":null,"checklink":"/js/plugins/video.js"};
   // Fix: Ensure page is at the correct top position on data load
   if (history.scrollRestoration) {
     history.scrollRestoration = 'auto';
