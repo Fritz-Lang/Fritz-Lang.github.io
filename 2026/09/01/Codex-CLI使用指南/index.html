@@ -1,0 +1,863 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Codex CLI使用指南 | 醉马的博客</title><meta name="author" content="Fritz Lang"><meta name="copyright" content="Fritz Lang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简要介绍Codex和参数及命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codex CLI使用指南">
+<meta property="og:url" content="https://fritz-lang.github.io/2026/09/01/Codex-CLI%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
+<meta property="og:site_name" content="醉马的博客">
+<meta property="og:description" content="简要介绍Codex和参数及命令">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://imgbob.net/ib/1HiZySdE108DyYg_1787543275.jpeg">
+<meta property="article:published_time" content="2026-08-31T18:32:45.000Z">
+<meta property="article:modified_time" content="2026-09-29T03:20:37.627Z">
+<meta property="article:author" content="Fritz Lang">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="CLI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgbob.net/ib/1HiZySdE108DyYg_1787543275.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Codex CLI使用指南",
+  "url": "https://fritz-lang.github.io/2026/09/01/Codex-CLI%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/",
+  "image": "https://imgbob.net/ib/1HiZySdE108DyYg_1787543275.jpeg",
+  "datePublished": "2026-08-31T18:32:45.000Z",
+  "dateModified": "2026-09-29T03:20:37.627Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Fritz Lang",
+      "url": "https://fritz-lang.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://imgbob.net/ib/IPSQQcNc7RIc0F5_1787543275.png"><link rel="canonical" href="https://fritz-lang.github.io/2026/09/01/Codex-CLI%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Codex CLI使用指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://imgbob.net/ib/1HiZySdE108DyYg_1787543275.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">醉马的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Codex CLI使用指南</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Codex CLI使用指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-31T18:32:45.000Z" title="发表于 2026-09-01 02:32:45">2026-09-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-29T03:20:37.627Z" title="更新于 2026-09-29 11:20:37">2026-09-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86/">知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Codex"><a href="#Codex" class="headerlink" title="Codex"></a>Codex</h1><blockquote>
+<p>One agent for everywhere you code。</p>
+</blockquote>
+<h2 id="何为Codex？"><a href="#何为Codex？" class="headerlink" title="何为Codex？"></a>何为Codex？</h2><p>Codex是一个AI<strong>编程代理</strong>（AI Coding Agent）,目标不是帮你补全代码，而是<strong>直接参与并完成整个开发任务</strong>——写代码、修Bug、跑测试、提Pull Request。</p>
+<p>对比传统聊天机器人，只有一个输入框，而Codex不一样，它本质上是一个运行在本地电脑上的AI Agent工作台。</p>
+<p>可以这样理解：传统聊天机器人只提供一个交互框，我们只可以输入文字来进行聊天这一项功能；但 Codex 包含了一堆工具，不仅可以聊天，还能自主修改代码、控制工具等等作用。但是两者并不是下载后就直接能使用的，两者都需要接入 AI，所以应该这样理解：下载的Codex是工具的集合，必须要接入相应的AI才可以使用。</p>
+<h2 id="如何下载并安装？"><a href="#如何下载并安装？" class="headerlink" title="如何下载并安装？"></a>如何下载并安装？</h2><p>Codex可以通过多种方式使用，这里只介绍CLI（命令行）：</p>
+<details>
+<summary>MacOs/Linux/Windows安装</summary>
+
+<blockquote>
+<p>macOS&#x2F;Linux一键安装与更新：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://chatgpt.com/codex/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Windows一键安装与更新：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell -ExecutionPolicy ByPass -c <span class="string">&quot;irm https://chatgpt.com/codex/install.ps1 | iex&quot;</span></span><br></pre></td></tr></table></figure>
+
+</details>
+
+<blockquote>
+<p>使用npm安装与更新：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @openai/codex</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用国内镜像安装更快</span></span><br><span class="line">npm install -g @openai/codex --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何启动？"><a href="#如何启动？" class="headerlink" title="如何启动？"></a>如何启动？</h2><p>安装完成后在终端运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codex</span><br></pre></td></tr></table></figure>
+
+<p>即可启动。</p>
+<h1 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h1><h2 id="命令行选项（CLI-options）"><a href="#命令行选项（CLI-options）" class="headerlink" title="命令行选项（CLI options）"></a>命令行选项（CLI options）</h2><p>命令行选项（CLI Options）是跟在命令名后的修饰符，用于控制命令的具体行为，例如显示详细信息、指定输出格式或设置执行模式。分为短选项和长选项。</p>
+<p>短选项指跟在命令后只有单个字母的修饰符，前缀为单个连字符 - 。长选项指跟在命令后由多个字母组成的修饰符，前缀为双连字符 – 。</p>
+<p>这些是我个人常用的命令行选项：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>用途</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-p</code>、<code>--profile</code></td>
+<td>选择配置方案。你切换 OpenAI &#x2F; DeepSeek 会用到</td>
+<td><code>codex -p deepseek</code></td>
+</tr>
+<tr>
+<td><code>-m</code>、<code>--model</code></td>
+<td>指定模型；<strong>只选模型，不会自动切换供应商</strong></td>
+<td><code>codex -p deepseek -m deepseek-v4-pro</code></td>
+</tr>
+<tr>
+<td><code>-C</code>、<code>--cd</code></td>
+<td>指定要处理的项目目录</td>
+<td><code>codex -C ~/projects/demo</code></td>
+</tr>
+<tr>
+<td><code>-s</code>、<code>--sandbox</code></td>
+<td>设置文件访问范围：<code>read-only</code>、<code>workspace-write</code>、<code>danger-full-access</code></td>
+<td><code>codex -s workspace-write</code></td>
+</tr>
+<tr>
+<td><code>-a</code>、<code>--ask-for-approval</code></td>
+<td>设置运行命令时何时请求确认：<code>on-request</code>、<code>never</code></td>
+<td><code>codex -a on-request</code></td>
+</tr>
+<tr>
+<td><code>-c</code>、<code>--config</code></td>
+<td>临时覆盖配置项，可重复指定</td>
+<td><code>codex -c &#39;model_reasoning_effort=&quot;high&quot;&#39;</code></td>
+</tr>
+<tr>
+<td><code>-i</code>、<code>--image</code></td>
+<td>将图片附在初始请求中</td>
+<td><code>codex -i screenshot.png &quot;分析截图&quot;</code></td>
+</tr>
+<tr>
+<td><code>--search</code></td>
+<td>启用实时网页搜索</td>
+<td><code>codex --search</code></td>
+</tr>
+<tr>
+<td><code>-h</code>、<code>--help</code></td>
+<td>查看帮助</td>
+<td><code>codex --help</code></td>
+</tr>
+</tbody></table>
+<p>当然，也有使用频率较少的命令行选项：</p>
+<details>
+<summary>不常用的命令行选项</summary>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--add-dir &lt;路径&gt;</code></td>
+<td>在当前工作目录外，额外允许 Codex 写入指定目录；可重复使用</td>
+</tr>
+<tr>
+<td><code>--no-alt-screen</code></td>
+<td>关闭终端备用屏幕模式</td>
+</tr>
+<tr>
+<td><code>--oss</code></td>
+<td>使用本地模型；通常配合 <code>--local-provider</code></td>
+</tr>
+<tr>
+<td><code>--local-provider lmstudio</code> 或 <code>--local-provider ollama</code></td>
+<td>指定本地模型服务，仅与 <code>--oss</code> 搭配</td>
+</tr>
+<tr>
+<td><code>--enable &lt;功能&gt;</code></td>
+<td>本次运行启用某个功能开关；可重复使用</td>
+</tr>
+<tr>
+<td><code>--disable &lt;功能&gt;</code></td>
+<td>本次运行关闭某个功能开关；可重复使用</td>
+</tr>
+<tr>
+<td><code>--strict-config</code></td>
+<td>配置中有当前版本不认识的字段时，直接报错</td>
+</tr>
+<tr>
+<td><code>--remote &lt;地址&gt;</code></td>
+<td>连接远程 Codex app-server</td>
+</tr>
+<tr>
+<td><code>--remote-auth-token-env &lt;环境变量名&gt;</code></td>
+<td>从环境变量读取连接远程服务所需的认证令牌；需配合 <code>--remote</code></td>
+</tr>
+<tr>
+<td><code>--dangerously-bypass-hook-trust</code></td>
+<td>本次运行时跳过对已启用 hook 的持久信任检查</td>
+</tr>
+</tbody></table>
+<p>上面列的是交互模式的全局参数。像<code>codex exec</code>、<code>codex review</code>等子命令还有各自专用的参数；例如<code>codex exec --help</code>会显示<code>exec</code>的参数。官方文档也将这些分开列出。</p>
+</details>
+
+<p>你可以在终端运行下面两条，查看自己安装版本支持的准确清单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">codex --<span class="built_in">help</span></span><br><span class="line">codex <span class="built_in">exec</span> --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="子命令（subcommands）"><a href="#子命令（subcommands）" class="headerlink" title="子命令（subcommands）"></a>子命令（subcommands）</h2><p>子命令是命令行工具的一种结构化设计方式，用于将复杂的操作分解为逻辑清晰的模块。</p>
+<p>例如，Git、Go、Docker、pip 等工具都使用子命令来区分不同功能。每个子命令可以独立解析参数和选项，允许用户通过类似<code>git commit</code>或<code>pip install</code>的方式调用特定功能。</p>
+<p>下面我来介绍Codex常用的子命令：</p>
+<table>
+<thead>
+<tr>
+<th>子命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>codex exec</code></td>
+<td>在终端非交互运行 Codex，适合一次性任务、脚本和 CI。例：<code>codex exec &quot;解释项目结构&quot;</code></td>
+</tr>
+<tr>
+<td><code>codex resume</code></td>
+<td>恢复之前的交互会话。例：<code>codex resume --last</code></td>
+</tr>
+<tr>
+<td><code>codex delete</code></td>
+<td>永久删除指定会话。</td>
+</tr>
+<tr>
+<td><code>codex review</code></td>
+<td>非交互地检查未提交改动、指定分支差异或某个提交。</td>
+</tr>
+<tr>
+<td><code>codex archive</code></td>
+<td>归档指定会话。</td>
+</tr>
+<tr>
+<td><code>codex unarchive</code></td>
+<td>恢复已归档的会话。</td>
+</tr>
+<tr>
+<td><code>codex plugin</code></td>
+<td>从已配置的插件市场安装、列出或移除插件。</td>
+</tr>
+<tr>
+<td><code>codex plugin marketplace</code></td>
+<td>添加、列出、更新或移除插件市场。</td>
+</tr>
+<tr>
+<td><code>codex mcp</code></td>
+<td>管理 MCP 服务，例如查看、添加、移除或认证服务。</td>
+</tr>
+<tr>
+<td><code>codex update</code></td>
+<td>检查或安装 CLI 更新；是否支持自更新取决于安装版本。</td>
+</tr>
+</tbody></table>
+<p>当然，也有使用频率较少的子命令：</p>
+<details>
+<summary>不常用的子命令</summary>
+
+<table>
+<thead>
+<tr>
+<th>子命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>codex doctor</code></td>
+<td>生成诊断信息，用于排查安装、配置、认证、终端或运行环境问题。</td>
+</tr>
+<tr>
+<td><code>codex fork</code></td>
+<td>从已有会话分出一个新会话，保留原会话内容。</td>
+</tr>
+<tr>
+<td><code>codex cloud</code>（别名：<code>codex cloud-tasks</code>）</td>
+<td>在终端浏览或执行 Codex 云端任务。</td>
+</tr>
+<tr>
+<td><code>codex apply</code>（别名：<code>codex a</code>）</td>
+<td>将 Codex 云端会话生成的最新差异应用到本地工作区。</td>
+</tr>
+<tr>
+<td><code>codex login</code> &#x2F; <code>codex logout</code></td>
+<td>登录或移除本地保存的认证信息。</td>
+</tr>
+</tbody></table>
+<p>以下用于设置和维护：</p>
+<table>
+<thead>
+<tr>
+<th>子命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>codex features</code></td>
+<td>查看功能开关，并启用或关闭部分功能。</td>
+</tr>
+<tr>
+<td><code>codex completion</code></td>
+<td>为 Bash、Zsh、Fish 或 PowerShell 生成命令补全脚本。</td>
+</tr>
+<tr>
+<td><code>codex app</code></td>
+<td>从终端启动 ChatGPT 桌面应用；受操作系统和应用安装状态影响。</td>
+</tr>
+</tbody></table>
+<p>我们一般较少使用开发、调试和策略工具：</p>
+<table>
+<thead>
+<tr>
+<th>子命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>codex app-server</code></td>
+<td>启动 Codex app server，主要用于本地开发、调试或协议集成。</td>
+</tr>
+<tr>
+<td><code>codex remote-control</code></td>
+<td>启动或管理本地 app server 的远程控制，也可生成临时配对码。常见子命令包括 <code>start</code>、<code>stop</code>、<code>pair</code>。</td>
+</tr>
+<tr>
+<td><code>codex sandbox</code></td>
+<td>在 Codex 提供的 macOS、Linux 或 Windows 沙箱中运行命令。</td>
+</tr>
+<tr>
+<td><code>codex execpolicy</code></td>
+<td>测试执行策略规则，查看某条命令会被允许、要求确认还是阻止。</td>
+</tr>
+<tr>
+<td><code>codex debug models</code></td>
+<td>输出 Codex 当前识别的模型目录信息。</td>
+</tr>
+<tr>
+<td><code>codex debug prompt-input</code></td>
+<td>以 JSON 查看传给模型的提示输入内容。</td>
+</tr>
+<tr>
+<td><code>codex debug app-server send-message-v2</code></td>
+<td>通过内置测试客户端向 app server 发送一条消息，主要用于调试。</td>
+</tr>
+</tbody></table>
+</details>
+
+<p>查看某个命令的完整参数，可以运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codex &lt;子命令&gt; --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="斜杠命令（slash-commands）"><a href="#斜杠命令（slash-commands）" class="headerlink" title="斜杠命令（slash commands）"></a>斜杠命令（slash commands）</h2><p>斜杠命令可以通过在交互式会话中输入<code>/命令名</code>，可以快速执行复杂操作或重复性任务，而无需每次手动输入完整提示或指令。</p>
+<p>在Codex CLI的交互界面里输入<code>/</code>，会弹出斜杠命令菜单；继续输入名称可以筛选。</p>
+<p>这些是我个人常用的斜杠命令：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/model</code></td>
+<td>选择当前会话的模型；有些模型也能在这里调推理强度。</td>
+</tr>
+<tr>
+<td><code>/plan</code></td>
+<td>进入计划模式；可以附带任务，例如 <code>/plan 规划迁移步骤</code>。</td>
+</tr>
+<tr>
+<td><code>/init</code></td>
+<td>在当前目录生成 <code>AGENTS.md</code> 初始模板。</td>
+</tr>
+<tr>
+<td><code>/skills</code></td>
+<td>浏览并选择可用 Skill。</td>
+</tr>
+<tr>
+<td><code>/status</code></td>
+<td>查看会话配置、权限和上下文使用情况。</td>
+</tr>
+<tr>
+<td><code>/review</code></td>
+<td>请 Codex 检查当前工作区改动。</td>
+</tr>
+<tr>
+<td><code>/diff</code></td>
+<td>查看 Git 改动，包括尚未跟踪的文件。</td>
+</tr>
+<tr>
+<td><code>/resume</code></td>
+<td>从会话列表恢复以前的会话。</td>
+</tr>
+<tr>
+<td><code>/delete</code></td>
+<td>永久删除当前会话及其派生会话，并退出 CLI。</td>
+</tr>
+<tr>
+<td><code>/compact</code></td>
+<td>总结当前对话、压缩上下文。</td>
+</tr>
+<tr>
+<td><code>/mention</code></td>
+<td>选择并附加文件或文件夹。</td>
+</tr>
+<tr>
+<td><code>/permissions</code></td>
+<td>调整 Codex 在当前会话中的操作权限。</td>
+</tr>
+<tr>
+<td><code>/mcp</code></td>
+<td>查看当前可用的 MCP 服务和工具；输入 <code>/mcp verbose</code> 可查看更多详情。</td>
+</tr>
+</tbody></table>
+<p>以下用的较少：</p>
+<details>
+<summary>不常用的斜杠命令</summary>
+
+<blockquote>
+<p>会话管理</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/new</code></td>
+<td>在当前 CLI 中开启一个新聊天。</td>
+</tr>
+<tr>
+<td><code>/clear</code></td>
+<td>清空当前界面并开始新聊天。</td>
+</tr>
+<tr>
+<td><code>/fork</code></td>
+<td>从当前聊天分出新聊天，保留原聊天。</td>
+</tr>
+<tr>
+<td><code>/side</code>、<code>/btw</code></td>
+<td>开启临时旁支对话，不打断主任务。</td>
+</tr>
+<tr>
+<td><code>/rename</code></td>
+<td>重命名当前聊天。</td>
+</tr>
+<tr>
+<td><code>/archive</code></td>
+<td>归档当前会话并退出 CLI。</td>
+</tr>
+<tr>
+<td><code>/copy</code></td>
+<td>复制 Codex 最近一条已完成的回复。</td>
+</tr>
+<tr>
+<td><code>/exit</code>、<code>/quit</code></td>
+<td>退出 CLI；两者作用相同。</td>
+</tr>
+<tr>
+<td><code>/app</code></td>
+<td>在支持的平台上把当前会话转到 ChatGPT 桌面应用。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>模型、目标和任务控制</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/fast</code></td>
+<td>开启或关闭当前模型提供的 Fast 服务等级；模型不支持时可能不显示。</td>
+</tr>
+<tr>
+<td><code>/personality</code></td>
+<td>选择 Codex 的表达风格；模型不支持时可能不显示。</td>
+</tr>
+<tr>
+<td><code>/goal</code></td>
+<td>设置或管理持续目标；可查看、编辑、暂停、恢复或清除目标。</td>
+</tr>
+<tr>
+<td><code>/approve</code></td>
+<td>对自动审查拒绝的近期操作批准重试一次；仅在相应审查流程中有用。</td>
+</tr>
+<tr>
+<td><code>/experimental</code></td>
+<td>查看或切换实验功能；部分更改可能需要重启。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>工具、上下文和扩展</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/raw</code></td>
+<td>开启或关闭原始滚动输出模式，便于选择和复制终端内容。</td>
+</tr>
+<tr>
+<td><code>/vim</code></td>
+<td>开启或关闭输入框的 Vim 编辑模式。</td>
+</tr>
+<tr>
+<td><code>/keymap</code></td>
+<td>查看或修改 TUI 键位绑定。</td>
+</tr>
+<tr>
+<td><code>/statusline</code></td>
+<td>设置终端底部状态栏显示的信息。</td>
+</tr>
+<tr>
+<td><code>/title</code></td>
+<td>设置终端窗口或标签页标题包含的信息。</td>
+</tr>
+<tr>
+<td><code>/theme</code></td>
+<td>选择终端语法高亮主题。</td>
+</tr>
+<tr>
+<td><code>/ps</code></td>
+<td>查看后台终端及其最近输出。</td>
+</tr>
+<tr>
+<td><code>/stop</code></td>
+<td>停止当前会话启动的后台终端。</td>
+</tr>
+<tr>
+<td><code>/usage</code></td>
+<td>查看账户用量或速率限制信息；显示内容取决于账户和环境。</td>
+</tr>
+<tr>
+<td><code>/debug-config</code></td>
+<td>查看配置层级和策略要求，用于排查配置问题。</td>
+</tr>
+<tr>
+<td><code>/pets</code>、<code>/pet</code></td>
+<td>选择或隐藏终端里的宠物。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>特定系统或条件下出现</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>适用情况与用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/setup-default-sandbox</code></td>
+<td>Windows 特定沙箱状态下，用于设置默认沙箱。</td>
+</tr>
+<tr>
+<td><code>/sandbox-add-read-dir</code></td>
+<td>Windows CLI 中为沙箱增加目录读取权限。</td>
+</tr>
+</tbody></table>
+</details>
+
+<h2 id="快捷键和交互输入语法"><a href="#快捷键和交互输入语法" class="headerlink" title="快捷键和交互输入语法"></a>快捷键和交互输入语法</h2><p>这些符号和快捷键要在 Codex CLI 的对话输入框里使用，不是在普通终端提示符里使用。</p>
+<p>1.输入符号</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@</code></td>
+<td>搜索工作区中的文件或文件夹，并把路径加到提示里，作为 Codex 的上下文。</td>
+<td><code>检查 @src/main.py</code></td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td><strong>提及 Skill</strong>，让 Codex 按该 Skill 的说明处理任务。输入 <code>$</code> 后可选择 Skill，或写出名称。</td>
+<td><code>$skill-creator 帮我创建一个技能</code></td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td><strong>运行本地 shell 命令</strong>。在输入行开头加 <code>!</code>，例如 <code>!git status</code>；命令按当前审批和沙箱设置执行。</td>
+<td><code>!ls</code></td>
+</tr>
+</tbody></table>
+<p>2.常用快捷键</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>↑</code> &#x2F; <code>↓</code></td>
+<td>浏览、恢复输入草稿历史</td>
+</tr>
+<tr>
+<td><code>Ctrl+R</code></td>
+<td>搜索提示词历史；选中后按 <code>Enter</code> 使用，按 <code>Esc</code> 取消</td>
+</tr>
+<tr>
+<td><code>Ctrl+O</code></td>
+<td>复制 Codex 最近一条已完成的回复，也可以输入 <code>/copy</code></td>
+</tr>
+<tr>
+<td><code>Tab</code></td>
+<td>Codex 正在工作时，将后续提示、斜杠命令或 shell 命令排队，等当前任务结束后执行</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>Codex 正在工作时，把补充指令插入当前任务</td>
+</tr>
+<tr>
+<td>输入框为空时连按两次 <code>Esc</code></td>
+<td>编辑上一条用户消息，并从那里分出一个新会话</td>
+</tr>
+<tr>
+<td><code>Ctrl+L</code></td>
+<td>仅清除终端画面，当前对话仍保留</td>
+</tr>
+<tr>
+<td><code>Ctrl+C</code></td>
+<td>退出 CLI；也可以输入 <code>/exit</code></td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://fritz-lang.github.io">Fritz Lang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://fritz-lang.github.io/2026/09/01/Codex-CLI%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">https://fritz-lang.github.io/2026/09/01/Codex-CLI%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://fritz-lang.github.io" target="_blank">醉马的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Codex/">Codex</a><a class="post-meta__tags" href="/tags/API/">API</a><a class="post-meta__tags" href="/tags/CLI/">CLI</a></div><div class="post-share"><div class="social-share" data-image="https://imgbob.net/ib/1HiZySdE108DyYg_1787543275.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/08/20/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="注意力机制"><img class="cover" src="https://imgbob.net/ib/EYn0LDmZOOf1ezm_1787553456.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">注意力机制</div></div><div class="info-2"><div class="info-item-1">何为注意力？如何发现到应用的？我们该如何理解注意力？</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://imgbob.net/ib/1HiZySdE108DyYg_1787543275.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Fritz Lang</div><div class="author-info-description">记录心得与感想</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Codex"><span class="toc-text">Codex</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%95%E4%B8%BACodex%EF%BC%9F"><span class="toc-text">何为Codex？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85%EF%BC%9F"><span class="toc-text">如何下载并安装？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8%EF%BC%9F"><span class="toc-text">如何启动？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="toc-text">使用教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%89%E9%A1%B9%EF%BC%88CLI-options%EF%BC%89"><span class="toc-text">命令行选项（CLI options）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E5%91%BD%E4%BB%A4%EF%BC%88subcommands%EF%BC%89"><span class="toc-text">子命令（subcommands）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%EF%BC%88slash-commands%EF%BC%89"><span class="toc-text">斜杠命令（slash commands）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%92%8C%E4%BA%A4%E4%BA%92%E8%BE%93%E5%85%A5%E8%AF%AD%E6%B3%95"><span class="toc-text">快捷键和交互输入语法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/Codex-CLI%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="Codex CLI使用指南">Codex CLI使用指南</a><time datetime="2026-08-31T18:32:45.000Z" title="发表于 2026-09-01 02:32:45">2026-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/20/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="注意力机制"><img src="https://imgbob.net/ib/EYn0LDmZOOf1ezm_1787553456.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="注意力机制"/></a><div class="content"><a class="title" href="/2026/08/20/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="注意力机制">注意力机制</a><time datetime="2026-08-20T03:30:00.000Z" title="发表于 2026-08-20 11:30:00">2026-08-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/19/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E4%B8%8E%E8%B5%84%E6%BA%90%E5%AF%BC%E8%88%AA/" title="实用工具与资源导航"><img src="https://imgbob.net/ib/MSPlyuzs8eIjgoc_1787543565.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="实用工具与资源导航"/></a><div class="content"><a class="title" href="/2026/08/19/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E4%B8%8E%E8%B5%84%E6%BA%90%E5%AF%BC%E8%88%AA/" title="实用工具与资源导航">实用工具与资源导航</a><time datetime="2026-08-19T02:00:00.000Z" title="发表于 2026-08-19 10:00:00">2026-08-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/18/Hexo%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97/" title="Hexo博客指南"><img src="https://imgbob.net/ib/BBMItHoPR7JukW4_1787543565.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo博客指南"/></a><div class="content"><a class="title" href="/2026/08/18/Hexo%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97/" title="Hexo博客指南">Hexo博客指南</a><time datetime="2026-08-18T09:30:00.000Z" title="发表于 2026-08-18 17:30:00">2026-08-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/18/Hexo%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="Hexo如何搭建个人博客"><img src="https://imgbob.net/ib/83kd3rZjdm0AWhs_1787543565.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo如何搭建个人博客"/></a><div class="content"><a class="title" href="/2026/08/18/Hexo%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="Hexo如何搭建个人博客">Hexo如何搭建个人博客</a><time datetime="2026-08-18T03:30:00.000Z" title="发表于 2026-08-18 11:30:00">2026-08-18</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By Fritz Lang</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const changeScriptToMath = article => {
+    article.querySelectorAll('script[type^="math/tex"]').forEach(el => {
+      const display = /mode=display/.test(el.type)
+      const node = document.createElement(display ? 'div' : 'span')
+      node.textContent = display
+        ? `$$${el.textContent}$$`
+        : `$${el.textContent}$`
+      el.parentNode.replaceChild(node, el)
+    })
+  }
+
+  const loadMathjax = () => {
+    const article = document.getElementById('article-container')
+    if (!article || article.querySelector('.hbe-container')) return
+    changeScriptToMath(article)
+
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem',
+            'ui/lazy'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          lazyMargin: '200px',
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.typesetClear()
+      MathJax.typesetPromise([ article ])
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
